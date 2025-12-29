@@ -246,4 +246,41 @@ y %in% x
  # to sort the elements of a vector
 sort(c(2,4,1,0,7,5,3,6))
 
+# sort inverse 
+sort(c(2,4,1,0,7,5,3,6),decreasing = TRUE)
+
+
+unique(c(1,2,1,1,1,3,4,3,3)) # to get the unique values of a vector
+
+
+# which() gives you the position of the elements of a vector satisfying a certain condition
+x = c(0,3,2)
+which(x<=3 & x>=2)
+
+# which() gives you the position of the elements of a vector satisfying a certain condition
+x = c(0,1,4,5,6,3,9,7,10,2)
+which(x<=7& x>=1)
+
+
+rep(1:3,2) # for repeating a vector
+
+
+
+x= 1:1000
+head(x)
+
+tail(x)
+##
+
+# start with page 10 lecture 1 
+
+
+# ecdf(x): computes the Empirical Cumulative Distribution Function (ECDF)
+# It returns a function F(t) = proportion of observations in x that are ≤ t
+# Used to estimate the distribution of a sample without assuming any model
+# Example: ecdf(x)(2) gives P(X ≤ 2) based on the data
+
+x = c(1,1,1,2,2,3,5,5)
+ecdf(x) # this yields the empirical cumulative distribution function
+?ecdf
 
