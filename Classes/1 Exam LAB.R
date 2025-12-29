@@ -168,4 +168,32 @@ x/4 # to divide by 4 each element of x which had value 1:6 and 4 will divide eac
 
 x^2 # to get the square of the each element which had value 1:6 and 4 will square each elemets
 
+sqrt(x) # the function is applied element-wise
+
+abs(x) # absolute value
+
+exp(x);log(x)  # ;new line  
+
+?exp # watching the exponetial doccuments 
+
+
+# summing up two vectors of different lengths
+# the shortest one is recycled
+1:3 + 1:6
+
+1:4 + 1:6 # this yields a warning
+
+sum(x) # to sum all elements of the vector "x" which had value 1:6 it will some 1 2 3 4 5 6
+
+prod(x) # to get the product which had value 1:6 it will some 1 2 3 4 5 6
+
+max(x) # to get the maximum which had value 1:6 it will some 1 2 3 4 5 6
+
+min(x) # to get the minimum  which had value 1:6 it will some 1 2 3 4 5 6
+
+range(x) # to get min and max together
+length(x) # to get the length of the vector
+
+
+
 
