@@ -195,5 +195,55 @@ range(x) # to get min and max together
 length(x) # to get the length of the vector
 
 
+# how can we compute the mean of the elements of x 
+sum(x)/length(x)
+
+# but we can use directly the mean function
+mean(x)
+
+# to get the sequence of numbers between 0 and 1 equally spaced by 0.02
+seq(0,1,by=0.2)
+
+# or you can fix the number of (equally spaced) numbers that you want to obtain
+seq(0,1,length.out=20)
+
+seq(0,1,length.out=10)
+
+cumsum(x) # cumulative sum
+?cumsum # # watching the cumulative sum doccuments 
+
+# to get the second element of x
+x[2]
+
+
+(x <- runif(20)) # to create a vector with 20 pseudo-random numbers between 0 and 1x
+(x<- runif(50))
+
+cumsum(x)[length(x)]
+
+# the inverse operation of cumsum is diff
+x= c(4,5,3)
+diff(x) # takes the difference between each element and the previous element
+
+1 %in% x # to verify if 1 belongs to x
+
+4 %in% x
+
+5 %in% x
+
+# we have two menthod with "=" or "<-"
+# method 1 
+x = 1:4
+y = c(1,2,13,40)
+y %in% x
+
+# method 2 
+x <- 1:4
+y <- c(1,2,13,40)
+y %in% x
+
+
+ # to sort the elements of a vector
+sort(c(2,4,1,0,7,5,3,6))
 
 
