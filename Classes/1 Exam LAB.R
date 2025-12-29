@@ -63,3 +63,109 @@ try(x) # finding the object
 
 
 
+                  # line 35 si equivalent to
+x = 10 # "=" is equivalent to "<-" and means assignment
+x
+
+try(x)
+
+
+          # Same thing happend if we do 23->x or 23<-x or 23 = x
+23->x
+x
+
+
+#if you want to create an object and display it immediately
+# you can use round parenthesis
+(x<- 30)
+
+
+# this is equivalent to
+x<-30; x # ; is equivalent to going to new line 
+
+
+x*2
+# or 
+2*x
+
+# let us see how to create a function 
+
+?`function-class`  # watching the documentation of function class
+func <- function(x){exp(1/x^2)}
+func(10)
+
+# same result without function and assign values directly 
+exp(1/10^2)
+
+plot(func, 0.1,0.105) # to plot the function in the interval [0.1,0.105]
+
+
+
+ # logic operations
+
+
+
+3>4
+4>1
+4>=3
+4<=3
+
+3 == 4 # double equality is used to verify equality
+4 == 4
+
+3 != 4 # "!=" means "different from"
+
+4 != 4 # "!=" means "different from"
+
+
+TRUE != FALSE
+
+"ciao" != "hi"
+"ciao" < "hi" # R considers the alphabetical order
+
+
+
+!(2>3) #"!" means negation
+
+
+# | means logic union
+# you get TRUE if at least one of the two statement is TRUE
+(2>3)|(3<4)
+
+# it is equivalent to
+any(2>3,3<4)
+
+# & means logic intersection
+# you get TRUE if both statements are TRUE
+(2>3)&(3<4)
+
+
+# it is equivalent to
+all(2>3,3<4)
+
+# function "c" (concatenate)
+(x= c(4,7,9))
+
+(y=c(14,10))
+
+c(x,y) # you can concatenate tow vectors together
+
+c(y,x)
+
+# numeric sequences
+3:23
+
+24:10 # from 24 to 10 all numbers
+
+
+(x=1:6)# it define the range of numbers from 1 to 6 
+
+ 
+x + 4 # to add 4 to each elements of x which had value 1:6 and 4 will add each elemets
+
+
+x/4 # to divide by 4 each element of x which had value 1:6 and 4 will divide each elemets
+
+x^2 # to get the square of the each element which had value 1:6 and 4 will square each elemets
+
+
