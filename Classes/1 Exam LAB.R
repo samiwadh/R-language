@@ -402,3 +402,193 @@ z[,2, drop=FALSE]
 
 # vectors can be named
 (x=1:3)
+names(x) <- c("first","second","third")
+x
+
+x['second']
+
+# one can create the same named vector as follows
+(x=c("first"=1, "second"=2,"third"=3))
+
+
+# lists can also be named
+l1
+
+names(l1) <- c("Antonio", "Giovanni", "Giuseppe", "Fabrizio")
+# to recall the second element of the list
+l1[[2]]
+
+
+# character vectors vs factor vectors
+x = c("a", "b", "a", "a", "c", "b")
+# let y be a factor with values given by x
+y = factor(x)
+x
+
+
+y
+
+levels(y)
+
+
+# factors allow us to manage ordinal variables
+x = c("good", "sufficient", "good", "very good", "sufficient", "not sufficient")
+# let x become a factor
+(x=factor(x))
+
+
+# R generally considers the alphabetic order for character strings
+(x=factor(x, levels=c("not sufficient", "sufficient", "good", "very good"),
+          ordered = TRUE))
+
+# in this way R understands that the levels are ordered
+x>= "good"
+
+# data frames
+# techinically data frames are lists whose elements are vectors of equal length
+foo = 1:5
+bar = 2*foo
+(foo.bar = data.frame(foo, bar))
+
+
+is.data.frame(foo.bar)
+is.list(foo.bar)
+
+
+# a dataframe in the base package of R is Orange
+?Orange
+# if we have a large dataframe, head() and tail() are useful
+head(Orange) # to see just the first 6 rows
+
+
+tail(Orange) # to see just the last 6 rows
+
+nrow(Orange) # number of rows/statistical units
+ncol(Orange) # number of columns/variables
+
+Orange$circumference # to obtain the variable circumference in the dataframe Orange
+summary(Orange$circumference)
+
+names(Orange) # the names of the variables
+colnames(Orange) # this is equivalent
+rownames(Orange)
+dim(Orange) # dimensions of the dataframe
+
+# in this case 35 rows/stat units and 3 columns/variables
+Orange$Tree == 2 # this yields a logical vector
+# How can we select the rows in which Tree is equal to 2?
+Orange[Orange$Tree==2,]
+
+# as an alternative we can write
+subset(Orange, Tree==2)
+
+
+# the subset function handles better missing values
+# what if we want to select the rows where age is greater than 1300?
+Orange[Orange$age > 1300, ]
+# or
+subset(Orange, age>1300)
+# mtcars is a dataframe with rownames
+
+# what if I want to select the rows where age is greater than 1300 and Tree is
+# equal to 2?
+subset(Orange, age>1300 & Tree==2)
+
+
+# to select the first and third row
+Orange[c(1,3),]
+
+
+# to get the first three rows and the third column
+Orange[1:3,3]
+
+
+# to select the second and third column
+Orange[,2:3]
+
+# this is the same as removing the first column
+Orange[,-1]
+
+# we can select the second column in this way
+Orange[,2]
+
+# or
+Orange[["age"]]
+
+# or
+Orange$age
+
+# or
+Orange[,"age"]
+
+# or
+variable <- "age"
+Orange[[variable]]
+
+# to get a new dataframe form Orange just with the second column
+Orange[,"age", drop=FALSE]
+
+
+# to get a new dataframe from Orange just with Tree and circumference
+Orange[,c("Tree", "circumference")]
+
+
+# or
+subset(Orange, select=c("Tree", "circumference"))
+
+
+# let us now create a new dataframe with just the first 7 rows
+(Orange.new=head(Orange, 7))
+
+
+# to add a variable
+new.var = c(1,2,4,2,1,1,3)
+Orange.new = cbind(Orange.new, new.var)
+Orange.new
+
+# to change the name of the new variable
+names(Orange.new)[names(Orange.new)=="new.var"] <- "var.new"
+Orange.new
+
+
+# use setwd() to select the working directory of go to Session -> Select working directory
+setwd("D:/1 Univesrity work/Lect/Statistics/R-language/Dataset setwed directory")
+getwd() # to get the working directory
+dir() # to get the content of the working directory
+
+
+weather = read.csv("weather_data.csv")
+# View(weather) # to see the dataframe weather
+summary(weather)
+
+
+names(weather)
+
+weather$Max.Gust.SpeedMPH
+is.na(weather$Max.Gust.SpeedMPH) # it returns TRUE if the value is missing
+
+
+# and FALSE otherwise
+# how to get the positions of the missing values?
+which(is.na(weather$Max.Gust.SpeedMPH))
+# how can we find out how many the missing values are?
+sum(is.na(weather$Max.Gust.SpeedMPH))
+
+weather$Events
+
+# how to tell how many values are taken by the variable Events?
+length(unique(weather$Events))
+
+
+unique(weather$Events)
+
+
+# install.packages("tidyverse")
+
+
+# we did that why it in comment install.packages("tidyverse")
+
+
+
+library(tidyverse)
+
