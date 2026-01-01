@@ -308,3 +308,97 @@ plot(ecdf(x), main = "Empirical cumulative distribution Function")
 
 
 typeof(x)
+typeof(y)
+typeof(w)
+typeof(z)
+
+#all elements of a vector must be of the same type
+# otherwise you get coercion in this direction
+# characther <- double <- integer <- logical
+# for instance
+c(TRUE,10)
+
+x = c(8.1,9.1,4.3,4.2)
+x
+
+
+#index for finding value 
+
+x[1]
+#or 
+x[[1]]
+x[3]
+
+# finding multiple value through indexing 
+x[1:4]
+
+# Concant function 
+
+x[c(1,4)]
+
+# to select all elements of x that are greater than 5
+x[x>5]
+
+
+# NA means "not available" and refers to missing values
+(x=c(1,NA,2))
+
+(x = c(8.1,6.2,4.3))
+
+
+
+# we can substitute elements of a vector
+
+x[3] = 4 # equivalent to: x[3]<-4
+x
+
+# lists are generalizations of vectors where each element can be anything
+(l1 <- list(1:3,"a",c(TRUE,FALSE,TRUE),c(2.3,5.3)))
+
+l1[[3]]
+# OR
+l1[3]
+l1[c(1,3)]
+
+
+# a vector can be converted into a list
+(alist = as.list(1:3))
+
+
+# or viceversa a list can be converted into a vector
+unlist(alist)
+
+# R objects can be given attributes, for instance dim
+(z<-1:6)
+
+# WE HAVE TO METHOD TO CALL MATRIC 
+dim(z)<- c(3,2) # in this way z becomes a matrix
+z
+?dim
+
+
+ 
+# we obtain the same if we write
+z <- matrix(1:6, nrow=3, ncol=2)
+z
+
+# if we want to create the matrix rowwise
+(z <- matrix(1:6, nrow=3, ncol=2, byrow=TRUE))
+
+
+# NOW we are going to Indexing on matrix 
+z[1,2]
+z[1:3]
+z[2:3]
+# if we want to select the second column
+z[,2]
+z[1,]
+
+# to obtain a submatrix given by the first and third row
+z[c(1,3),]
+
+# to obtain the submatrix given by the second column
+z[,2, drop=FALSE]
+
+# vectors can be named
+(x=1:3)
