@@ -551,6 +551,8 @@ names(Orange.new)[names(Orange.new)=="new.var"] <- "var.new"
 Orange.new
 
 
+
+
 # use setwd() to select the working directory of go to Session -> Select working directory
 setwd("D:/1 Univesrity work/Lect/Statistics/R-language/Dataset setwed directory")
 getwd() # to get the working directory
