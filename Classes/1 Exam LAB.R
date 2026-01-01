@@ -5,7 +5,7 @@
 2*4^2
 
 #we can see that from very large or very small numbers R uses Scientific notation
-format(2*10^6)
+format(2*10^6) 
 
 
 
@@ -284,3 +284,27 @@ x = c(1,1,1,2,2,3,5,5)
 ecdf(x) # this yields the empirical cumulative distribution function
 ?ecdf
 
+ecdf(x)(2)
+
+
+# this is the proportion of elements of the vector x
+# that are smaller than or equal to 2
+# therefore line 187 is equivalent to
+sum(x<=2)/length(x)
+
+x= c(1,2,3)
+plot(ecdf(x), main = "Empirical cumulative distribution Function")
+
+
+# in R there are four types of vectors
+(x=c(TRUE, FALSE)) # logical vector
+
+
+(y=c(1L, 6L,10L)) # integer vector
+
+(w=c(1,2.5,-4.5)) # double
+
+(z=c("aa","ab")) # character strings vector
+
+
+typeof(x)
