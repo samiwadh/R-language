@@ -1,0 +1,13 @@
+gender,children,education,age,weight,employment
+male,0,Lower secondary,27,72.5,unemployed
+male,2,University,39,63.2,self-employed
+female,3,Upper secondary,42,59.1,unemployed
+female,4,Upper secondary,57,74.8,unemployed
+female,0,Upper secondary,81,75.3,employee
+female,2,Primary,48,69.6,self-employed
+male,0,University,33,58.2,unemployed
+female,1,University,24,54.9,unemployed
+female,0,Lower secondary,17,50.4,employee
+male,0,Primary,15,44.8,employee
+female,1,Upper secondary,60,80.1,self-employed
+female,2,Upper secondary,28,53.9,unemployed
