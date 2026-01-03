@@ -68,3 +68,17 @@ table(iris$sepl.int)
 # using table we can also create a contingency table between
 # the categorized variable and species
 table(iris$Species, iris$sepl.int)
+
+
+# we can obtain another representation for this table in this way
+data.frame(table(iris$Species, iris$sepl.int))
+
+# how to add a row to a dataframe?
+tail(Orange)
+
+# we can add a row in this way
+Orange.new2 = rbind(Orange, c(4,1000, 100))
+tail(Orange.new2)
+
+# indexes
+(x=runif(30))
