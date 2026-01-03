@@ -224,3 +224,157 @@ library(tidyverse)
 library(gapminder)
 # we have loaded the library gapminder cotaning a data frame named gapminder
 gapminder
+
+#View(gapminder)
+is_tibble(gapminder)
+is.data.frame(gapminder)
+is.list(gapminder)
+# tibbles are by default dispalyed showing just three significant digits
+# we increase the number of significant digits that are displayed for
+# instance to 9 in this way (important for the exam!)
+options(pillar.sigfig=9)
+gapminder
+
+# as an alternative you can convert gapminder to a traditional dataframe
+gapminder |> as.data.frame() |> head()
+
+# one difference between tibble and dataframes
+tibble(x= 1:4, y=2*x)
+
+rm(x,y)
+# the same does not work with dataframes
+data.frame(x=1:4, y=2*x) |> try()
+
+
+# you need to do this
+d<- data.frame(x=1:4); d$y = 2*d$x; d
+
+d[,"y"] # this returns a vector
+
+# but if we convert d to a tibble
+(d=as_tibble(d))
+
+
+####
+glimpse(gapminder)
+
+# the tidyverse equivalent of $ is "pull"
+gapminder$year |> head()
+
+# this is equivalent to
+gapminder |> pull(year) |> head()
+gapminder$year[3]
+
+# with tidyverse you can extract an element form a vector in this way
+gapminder |> pull(year) |> pluck(2)
+
+gapminder %>% .$year %>% .[3]
+
+# %>%  : pipe operator — passes the output of one function to the next (used to chain operations)
+# %in% : membership operator — checks if values belong to a specified set and returns TRUE/FALSE
+
+#the dplyr package (part of Tidyverse) contains several useful functions
+# filter, mutate, arrange, select, slice, summarize, group_by, count, left_join, etc
+# each one of these functions accepts as an input a dataframe/tibble and returns
+# a tibble as output
+# dplyr function where input and output are vectors: row_number, case_when
+# filter(): used to select rows which sastisfy a condition
+gapminder |> filter(year==2007) # to select all rows referred to year 2007
+
+# to keep just all rows referred to US
+dm=gapminder |> filter(country == "United States")
+dim(dm) # watching how many record are with the name "United States"
+
+# to select Italy and US for the year 2007
+gapminder |> filter(year==2007, country=="Italy"|country=="United States")
+
+# there is a better alternative
+gapminder |> filter(year==2007, country %in% c("Italy", "United States"))
+
+# So far we have created tibbles without saving them
+# If I want the new tibble to replace the original one, we can write:
+gapminder <-
+gapminder |> filter(year==2007, country %in% c("Italy", "United States"))
+gapminder
+
+
+# to go back to the original gapminder
+rm(gapminder)
+gapminder
+
+# arrange: used to sort rows wrt a specific variable (eg. gdpPercap)
+gapminder |> arrange(gdpPercap)
+
+# to arrange in decreasing order
+gapminder |> arrange(desc(gdpPercap))
+
+# for instance if we want to see which countries had the highest gdppercap in 2007
+gapminder |> filter(year==2007) |> arrange(desc(gdpPercap))
+
+# mutate: used to create new variables that can replace existing variables
+# if we want for instance the population to be given in millions
+gapminder |> mutate(pop=pop/10^6)
+
+# if we want to create a new variable for the total gdp
+gapminder |> mutate(gdp=gdpPercap*pop)
+
+# select: used to select some or all the variables in a given order
+gapminder |> select(country, year, pop)
+
+
+# select is also useful to change the order of the variables
+# for instance we can swap the firstu two variables in this way
+gapminder |> select(continent, country, everything())
+
+
+# slice: used to select rows by their position
+# if we want to select the first s7 rows
+slice(gapminder, 1:7)
+
+# count: used to compute absolute frequencies (counting the rows)
+# it is basically equivalent to table
+# if for instance we want the number of countries in each continent in 2007
+gapminder |> filter(year==2007) |> count(continent)
+
+
+# "count" can also be used to sum values of a variable
+# for instance if we want to compute the total population in millions
+# of each continent in 2007
+gapminder |> filter(year==2007) |> count(continent, wt=pop/10^6) |>
+  arrange(desc(n))
+
+# group_by: it converts the tibble in a tibble with groups
+# ungroup: it removes the grouping
+gapminder |> filter(year==2007) |> group_by(continent)
+
+
+# let us compute the above statistics with the grouped tibble
+gapminder |> filter(year==2007) |>
+  group_by(continent) |>
+  summarise(countries_number=n(), tot_pop=sum(pop/10^6),
+            mean_pop=mean(pop/10^6), gdpPercap = weighted.mean(gdpPercap, pop))
+
+
+# we can group wrt two variables
+gapminder |> group_by(year, continent) |>
+  summarize(tot_pop=sum(pop/10^6))
+
+# what is the difference among the two tibbles that we obtain with the
+# following lines?
+gapminder |> filter(year==2007) |> group_by(continent) |>
+  mutate(pop_perc=pop/sum(pop)*100)|>
+  mutate(gdp_perc= gdpPercap*pop*100/sum(gdpPercap*pop))
+
+
+gapminder |> filter(year==2007) |> group_by(continent) |>
+  mutate(pop_perc=pop/sum(pop)*100)|> ungroup() |>
+  mutate(gdp_perc= gdpPercap*pop*100/sum(gdpPercap*pop))
+
+
+# in the first tibble, we have created two variables:
+# 1) the percentage of population of each country wrt the population
+# of the continent which the country belongs to
+# 2) the percentage of gdp of each country wrt the total gdp of the continent
+# which the country belongs to
+# in the second tibble, the second variable gives the percentage of the gdp
+# of each country wrt the total world gdp (in fact we get lower figures)
