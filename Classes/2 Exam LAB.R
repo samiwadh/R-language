@@ -2,7 +2,7 @@
 sunspot.year
 
 range(sunspot.year)# range min and max
-
+ 
 (breaks=seq(from = 0 , to=200 ,by=25))
 
 # we can categorize the continuous variable sunspot.year in this way 
