@@ -94,4 +94,66 @@ cut(sunspot.year, breaks=breaks, include.lowest = TRUE) |>
 cut(sunspot.year, breaks=breaks, include.lowest = TRUE) |>
   table()
 
-# PAGE 5
+# alternative for above code 
+
+cut_width(sunspot.year,25,boundary=0)|>head()
+
+#one can obtain the freq.distr.of the categorized variableas follows
+sunspot.cat=cut_width(sunspot.year,25,boundary=0)
+tibble(sunspot.cat)|>
+  count(sunspot.cat)
+
+
+#we have obtained the absolute frequencies
+#we can add there lative frequencies
+tibble(sunspot.cat)|>count(sunspot.cat)|>
+  mutate(f= proportions(n))
+
+#wecanverifyiftherel.freq.sumuptoone
+tibble(sunspot.cat)|>count(sunspot.cat)|>
+  mutate(f= proportions(n))|>
+  summarise(s=sum(f))
+
+# let us consider a random vector containing letters
+set.seed(100)
+(x = sample(letters, size=30, replace = TRUE))
+
+# how many different values are there in x?
+unique(x) |> length()
+
+# or we do in this way
+factor(x) |> nlevels()
+
+# or we can use a dplyr function
+n_distinct(x)
+
+setwd("D:\\1 Univesrity work\\Lect\\Statistics\\R-language\\Dataset setwed directory")
+weather <- read_csv("weather_data.csv")
+weather
+# Or
+library(readr)
+weather_data <- read_csv("~/Dataset setwed directory/weather_data.csv")
+head(weather_data,3)
+dim(weather_data)
+nrow(weather_data)
+head(student)
+
+
+# as an alternative you can use "Import Datasets" in the top right panel
+# in RStudio and choose the second option which is "From text (readr)"
+# How to count the number of different values in Events excluding missing values?
+# with base R
+na.omit(weather$Events) |> unique() |> length()
+#Use na.omit() when you want to ignore missing values
+
+#or 
+#with dplyr
+n_distinct(weather$Events,na.rm=TRUE) # na.rm stands for “remove NA”.
+
+
+#letusconsideratibblecontainingmissingvalues
+(df=tibble(x=c(1,2,NA,2,1,3),y=c(2,NA,1,3,2,4)))
+
+
+#Use is.na() when you want to detect or analyze missing values
+is.na(weather$Events) |> unique() |> length()
