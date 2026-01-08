@@ -282,3 +282,47 @@ scatterplot +
 # by default se=TRUE and we obtain the confidence band
 scatterplot +
   geom_smooth(aes(x=gdpPercap, y=lifeExp), method=lm)
+
+
+# if method is not indicated, nonparametric regression is performed
+scatterplot +
+  geom_smooth(aes(x=gdpPercap, y=lifeExp))
+
+
+#if we want to use linear regression we can improve the situation
+#resorting to the log scale
+scatterplot+scale_x_log10()+
+  geom_smooth(aes(x=gdpPercap,y=lifeExp),method=lm,se=FALSE)
+
+
+
+#we canal so add a  categorical variable(such as continent)by colour
+ggplot(gapminder2007)+
+  geom_point(mapping=aes(x=gdpPercap,y=lifeExp,colour=continent))+
+  scale_x_log10()+
+  geom_smooth(aes(x=gdpPercap,y=lifeExp),method=lm,se=FALSE)
+
+
+# we can also add another quantitative variable (e.g. the population)
+# by the sizes of the dots
+ggplot(gapminder2007)+
+  geom_point(mapping= aes(x=gdpPercap, y=lifeExp, colour=continent, size=pop)) +
+  scale_x_log10() +
+  geom_smooth(aes(x=gdpPercap, y=lifeExp), method=lm, se=FALSE)
+
+
+#we can costumize colors(for instance to have colors for color blind people)
+#using the librarygg themes
+dev.new() #this open a new window for the plot
+#we can make a separatep lot for every year
+ggplot(gapminder)+
+  geom_point(mapping=aes(x=gdpPercap,y=lifeExp,colour=continent,size=pop))+
+  scale_x_log10()+
+  facet_wrap(~year)
+
+#let us add the regression line
+ggplot(gapminder)+
+  geom_point(mapping=aes(x=gdpPercap,y=lifeExp,colour=continent,size=pop))+
+  scale_x_log10()+
+  facet_wrap(~year)+
+  geom_smooth(aes(x=gdpPercap,y=lifeExp),method=lm,se=FALSE)
