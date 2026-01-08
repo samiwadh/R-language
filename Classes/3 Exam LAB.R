@@ -158,3 +158,127 @@ n_distinct(weather$Events,na.rm=TRUE) # na.rm stands for “remove NA”.
 #Use is.na() when you want to detect or analyze missing values
 is.na(weather$Events) |> unique() |> length()
 
+#we can remove the rows containing missing values in this way
+na.omit(df)
+
+
+#or in this way (using dplyr function)
+drop_na(df)
+
+#let us consider a tibble with random numbers between zero and one
+(df = tibble (x =runif(6),y=runif(6),z=runif(6)))
+
+# how to compute the mean of x, y, z for each row using tidyverse?
+# one could be tempted to write
+df |> mutate(m=mean(c(x,y,z)))
+
+# in this way we have obtained in each row
+mean(c(df$x, df$y, df$z))
+
+# as an alternative
+df |> rowwise() |> mutate(m=mean(c_across(everything())))
+
+
+# using the native R function apply:
+df$m = apply(df, 1, mean)
+df
+
+# if instead we want to compute the mean of each variable/column
+apply(df,2, mean)
+
+# as an alternative in dplyr we can do as follows
+df |> summarise_all(mean)
+
+# let us consider some list
+(l <- list(0:2, 1:2,-1:1))
+
+
+# suppose that we want to apply a function (e.g. exp)
+# to every element of the list to obtain a new list
+# we can use "lapply", which is an R native function
+lapply(l, exp)
+
+# an equivalent function (map) is given in the package "purrr"
+# which belongs to tidyverse
+map(l, exp)
+
+# if we want to apply the square function
+map(l, \(x) x^2)
+
+
+# we have used the new anonymous function syntax in base R
+# this is equivalent to
+map(l, ~.x^2) # using the old tidyverse syntax for anonymous functions
+
+# of course the following is the same
+map(l, function(x){x^2})
+
+
+# with "map" we can extract the second element from each element of the list
+map(l, 2)
+
+
+# if we want to add 3 to every element of the list
+map(l, `+`, 3)
+
+# if we want to compute the mean of each variable in the df tibble
+# we can do in this way
+map(df, mean)
+
+# we have obtained a list, if we want a vector
+map(df, mean)|> unlist()
+
+
+# map_dbl returns a double vector instead of a list
+# map, map_dbl are similar to lapply and sapply
+# there are other similar functions that
+# map_lgl, map_int, map_chr, map_df
+# to obtain a logical, integer, character vector or a tibble
+# the followings are equivalent:
+(1:10)^2
+
+sapply(1:10, \(x) x^2)
+map_dbl(1:10, \(x) x^2)
+map_int(1:10, \(x) x^2)
+
+
+# Graphics with ggplot2---
+dir() # to see the content of the working directory
+
+head(dati_normal)
+
+
+getwd() # to see what is the working directory
+
+load("nycflights.RData")
+# let us do an histogram of the variable dep_delay
+ggplot(data=nycflights) +
+  geom_histogram(aes(x=dep_delay))
+
+
+ggplot(data=nycflights) +
+  geom_histogram(aes(x=dep_delay), binwidth = 15)
+
+
+#these are not the correct histograms since the height of the bars are
+#the absolute frequencies
+#if we want the breaks to be-25,0,25,...,1500
+#intervals closed to the left and the densities(correcthistogram)
+ggplot(data=nycflights)+
+  geom_histogram(aes(x=dep_delay,y=after_stat(density)),
+                 breaks=seq(-25,1500,by=25),closed="left")
+
+
+#scatterplot
+gapminder2007=gapminder|>filter(year==2007)
+(scatterplot=ggplot(gapminder2007)+
+    geom_point(mapping=aes(x=gdpPercap,y=lifeExp)))
+
+# we can add the regression line 
+scatterplot +
+  geom_smooth(aes(x=gdpPercap, y=lifeExp), method=lm, se=FALSE)
+
+
+# by default se=TRUE and we obtain the confidence band
+scatterplot +
+  geom_smooth(aes(x=gdpPercap, y=lifeExp), method=lm)
