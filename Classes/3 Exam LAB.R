@@ -326,3 +326,79 @@ ggplot(gapminder)+
   scale_x_log10()+
   facet_wrap(~year)+
   geom_smooth(aes(x=gdpPercap,y=lifeExp),method=lm,se=FALSE)
+
+
+#let us create a new dataframe with the populations of each continent for each year
+(by_year_continent=gapminder|>group_by(year,continent)|>
+    summarize(totpop=sum(pop/10^6)))
+
+
+
+#let us make a plot
+ggplot(by_year_continent)+
+  geom_point(aes(x=year,y=totpop, color=continent))
+#it is better to have a plot with lines
+
+ggplot(by_year_continent)+
+  geom_line(aes(x=year,y=totpop,color=continent))
+
+#let us make a box plot for the gdppercap comparing the continents in 2007
+gapminder2007|>ggplot()+
+  geom_boxplot(aes(x=continent,y=gdpPercap))
+
+#we can flip the plot
+gapminder2007|>ggplot()+
+  geom_boxplot(aes(x=continent,y=gdpPercap))+
+  coord_flip()
+
+#geom_bar()creates a bar plot where the heights of the bars are the
+#absolute frequencies of a categorical variable
+ggplot(gapminder2007)+geom_bar(aes(continent))
+
+#let us add in formation about gdppercap in this last plot
+
+gapminder2007|>
+  mutate(gdpPercap=ifelse(gdpPercap<weighted.mean(gdpPercap,pop),"low","high"))|>
+  ggplot()+
+  geom_bar(aes(x=continent,fill=gdpPercap))
+
+#if we want the bars side by side
+gapminder2007|>
+  mutate(gdpPercap=ifelse(gdpPercap<weighted.mean(gdpPercap,pop),"low","high"))|>
+  ggplot()+
+  geom_bar(aes(x=continent,fill=gdpPercap),position=position_dodge())
+
+#let us consider these box plots
+ggplot(nycflights)+
+  geom_boxplot(aes(x=carrier,y=distance))
+#how to reorder the levels of the variable carrier according to theme an of the distance?
+
+
+
+ggplot(nycflights)+
+  geom_boxplot(aes(x=fct_reorder(carrier,distance),y=distance))+
+  xlab("carrier")
+##Regression lines---
+head(mtcars)
+
+
+m1<-lm(mpg~wt,data=mtcars)
+m1
+
+
+#to get the coefficients
+m1$coefficients
+
+#fitted values
+m1$fitted.values
+
+#or
+fitted.values(m1)
+
+
+#we can compute fitted values by hand
+coef(m1)[1]+coef(m1)[2]*mtcars$wt
+
+
+#residuals
+m1$residual
