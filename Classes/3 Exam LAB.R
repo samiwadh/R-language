@@ -151,9 +151,10 @@ na.omit(weather$Events) |> unique() |> length()
 n_distinct(weather$Events,na.rm=TRUE) # na.rm stands for “remove NA”.
 
 
-#letusconsideratibblecontainingmissingvalues
+#let us consider a tibble containing missing values
 (df=tibble(x=c(1,2,NA,2,1,3),y=c(2,NA,1,3,2,4)))
 
 
 #Use is.na() when you want to detect or analyze missing values
 is.na(weather$Events) |> unique() |> length()
+
