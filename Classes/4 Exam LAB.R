@@ -61,3 +61,47 @@ gapminder2007 |> ggplot()+
 
 #how to save a plot made with ggplot2 in the working directory?
 ggsave("new_plot.pdf")
+
+
+d=some_data_sk_kurt
+
+#Letuscomputemean,sd,skewness,andkurtosisforeachvariable
+#install.packages("moments")
+library(moments)
+reframe(d,across(everything(),
+                 \(x) c(mean(x), sd(x), skewness(x), kurtosis(x)))) |>
+  round(3) |> bind_cols(stat=c("mean","sd","skewness", "kurtosis"),x=_)
+
+
+# we can obtain the same result in other ways
+# let us create a new tibble with pivot_longer
+(d_longer = d |>
+    pivot_longer(everything(), names_to = "pop", values_to="value"))
+
+
+# the function pivot_wider does the opposite transformation of dataframes
+# pivot_wider and pivot_longer are similar to the native functions stack()
+# and unstack()
+# at this stage we can obtain what we have obtained with reframe()
+# in this other way
+d_longer |> group_by(pop) |>
+  summarize(mean=mean(value), sd=sd(value), skewness=skewness(value),
+            kurtosis=kurtosis(value)) |>
+  map_df(\(x) if (is.character(x)) x else round(x,3))
+
+
+dev.new()
+ggplot(d_longer)+
+  geom_histogram(aes(x=value,y=after_stat(density)),bins=20)+
+  facet_wrap(~pop,scales="free")
+#X1 is approximately symmetric
+#X2 has a right tail(positive skewness)
+#X3 has a left tail(negative skewness)
+#X4 has heavy tails(excess of kurtosis)
+#X5 has thinner tails(kurtosis<3)
+##merging dataframes---
+gapminder
+
+
+
+page 8
