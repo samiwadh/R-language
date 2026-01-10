@@ -64,7 +64,8 @@ ggsave("new_plot.pdf")
 
 
 d=some_data_sk_kurt
-
+library(readr)
+some_data_sk_kurt <- read_csv("Dataset setwed directory/some_data_sk_kurt.csv")
 #Letuscomputemean,sd,skewness,andkurtosisforeachvariable
 #install.packages("moments")
 library(moments)
@@ -103,5 +104,83 @@ ggplot(d_longer)+
 gapminder
 
 
+country_codes
 
-page 8
+
+#how to merge two dataframes or tibbles?
+#In base R we have the function "merge"
+#In dplyr we have several similar functions
+#one of themis"left_join"
+left_join(gapminder,country_codes)
+
+#in this way we have added to the tibble gapminder
+#the columns of country_codes
+#this is done automatically on the basis of the variables
+#that the two dataframes have incommon(in this case"continent")
+#all the rows of the first dataframe(gapminder)are kept but not all
+#the rows of the second dataframe(countrycodes)
+#this is equivalent to
+
+left_join(gapminder,country_codes,by = "country")
+
+
+#similar functions are right_join,full_join,inner_join
+#what if we need to merge two dataframes with respect to columns with differen
+#names?
+(df1=tibble(x=1:3))
+(df2=tibble(w=c(1,1,2),y=c("first","second","third")))
+left_join(df1,df2,by=join_by(x==w))
+#How to verify Gaussianity---
+
+library(readr)
+data_normal <- read_csv("Dataset setwed directory\\dati_normal.csv")
+head(dati_normal)
+
+
+ggplot(data=data_normal,aes(sample=X))+
+  stat_qq()+stat_qq_line()+facet_wrap(~pop)
+#in this plot we are comparing the sample quarantines with the theoretical quantiles
+#of the Gaussian distribution
+#if the points are close the line then the data can be regardedas realizations
+#of a Gaussian distribution
+#we can see that for population B we have gaussianity but not for
+#population A and C
+#as an alternative one can use Shapiro test
+#for which the null hypothesis is that the generating population is gaussian
+
+
+
+#in general,givena null hypothesis,the aim of a statistical test is to verify
+#if there is enough evidence int he sample to reject the null hypothesis
+#to this aim a p-value is computed and the null hypothesis is rejected if the pvalue
+#is small
+#generally,the null hypothesis is rejected if the pvalue is smaller than0.05
+#for instance,we just consider population A
+data_normal|>filter(pop=="A")|>pull(X)|>shapiro.test()
+
+
+
+#for pop.A we can reject the null hypothesis that the population is Gaussian
+#to testall three populations
+data_normal|>group_by(pop)|>
+summarize(shapiro.pvalue=shapiro.test(X)$p.value|>round(4))
+
+
+
+#to test all three populations
+data_normal|>group_by(pop)|>
+  summarize(shapiro.pvalue=shapiro.test(X)$p.value|>round(4))
+
+
+
+## Confidence interval for the mean----
+n=60 #sample size
+true.mean=100
+data=rnorm(n,true.mean,5)
+#we can obtain a point estimator for the population mean
+#considering the sample mean
+mean(data)
+
+
+
+pa 12
